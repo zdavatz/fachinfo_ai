@@ -19,6 +19,7 @@ import string
 import csv
 import time
 import re
+import os
 
 from collections import Counter
 from bs4 import BeautifulSoup
@@ -159,8 +160,21 @@ with open("./input/stopwords.txt", encoding="utf-8") as file:
         line = line.strip()
         stop_words.append(line)
 
+# Read our whitelist words
+white_words = []
+with open("./input/whitelist.txt", encoding="utf-8") as file:
+    for line in file:
+        line = line.strip()
+        white_words.append(line)
+
 # All stop words
 all_stopwords = set(stopwords.words('german')) | set(stop_words)
+
+# Check if directories exist, otherwise generate them
+if not os.path.exists("./output"):
+    os.makedirs("./output")
+if not os.path.exists("./dbs"):
+    os.makedirs("./dbs")
 
 # Open file for write
 csvfile = open("./output/frequency.csv", "w", newline="", encoding="utf-8")
@@ -208,7 +222,7 @@ for i in range(0, len(rows)):
 for k in sorted(word_dict):
     r = word_dict[k]
     # Change this number to increase or decrease the number of auto-generated stopwords
-    if len(r.split(",")) > 400:
+    if k not in white_words and len(r.split(",")) > 400:
         auto_wr.writerow([k])
     else:
         line = (k, r)

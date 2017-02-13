@@ -2,7 +2,7 @@
 # Author: Max Lungarella <cybrmx@gmail.com>
 # Date created: 10/02/2017
 # Date last modified: 13/02/2017
-# Python Version: 3.4
+# Python Version: 3.5.2
 #
 # Requirements:
 #   List of stopwords in folder input (filename: stopwords.txt)
@@ -184,7 +184,7 @@ for i in range(0, len(rows)):
     if regnr:
         regnr = regnr.split(",")[0]
 
-    if regnr:
+    if regnr:   # regnr == "62313"
         clean_text = remove_html_tags(html_content)
         if clean_text:
             tokens = get_tokens(clean_text)
@@ -207,6 +207,7 @@ for i in range(0, len(rows)):
 
 for k in sorted(word_dict):
     r = word_dict[k]
+    # Change this number to increase or decrease the number of auto-generated stopwords
     if len(r.split(",")) > 400:
         auto_wr.writerow([k])
     else:

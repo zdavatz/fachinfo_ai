@@ -7,3 +7,8 @@ Doing NLTK and AI on Swiss Fachinfos with Python. Parsing all the important word
 #### Output:
 * Frequency csv file in folder output (filename: frequency.csv)
 * Auto-generated stopwords file in folder output (filename: auto_stopwords.csv)
+
+#### Requirements
+* pip install nltk
+* python 3.5.2
+* nltk.download(stopwords,punkt)

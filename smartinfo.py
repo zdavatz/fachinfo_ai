@@ -24,9 +24,18 @@ import os
 from collections import Counter
 from bs4 import BeautifulSoup
 from nltk.corpus import stopwords
+from nltk.tokenize.mwe import MWETokenizer
+
+multi_word_tokenizer = MWETokenizer()
+# multi_word_tokenizer.add_mwe(("Multiple", "Sklerose"))
 
 con = None
 rows = []
+
+chapter_ids = ["section1", "section2", "section3", "section4", "section5", "section6", "section7", "section8",
+               "section9", "section10", "section11", "section12", "section13", "section14", "section15", "section16",
+               "Section7000", "Section7050", "Section7100", "Section7150", "Section7200", "Section7250", "Section7350",
+               "Section7400", "Section7450", "Section7500", "Section7550", "Section7600", "Section7650", "Section7700"]
 
 
 def is_integer(s):
@@ -42,14 +51,16 @@ def remove_html_tags(text):
     """
     Removes html tags
     :param text: html string
-    :return: clean string
+    :return: soup object
     """
     if text is not None:
-        # lowers = text.lower()
+        # Use lxml's HTML parser
         soup = BeautifulSoup(text, "lxml")
-        # Remove sections 17-final section, e.g. <div class="paragraph" id="section19">
+
+        # Remove title and owner sections
         soup.find("div", {"class": "MonTitle"}).decompose()
         soup.find("div", {"class": "ownerCompany"}).decompose()
+        # Remove sections 17-final section, e.g. <div class="paragraph" id="section19">
         divs = ["section17",
                 "section18",
                 "section19",
@@ -64,12 +75,17 @@ def remove_html_tags(text):
             div = soup.find("div", {"id": d})
             if div is not None:
                 div.decompose()
-
+        # Remove footer
         footer = soup.find("p", {"class": "footer"})
         if footer is not None:
             footer.decompose()
 
-        return soup.get_text()
+        # Replace <br /> with " "
+        for e in soup.findAll("br"):
+            e.replace_with(" ")
+
+        # Get text as html string
+        return soup
     return []
 
 
@@ -82,6 +98,7 @@ def get_tokens(text):
     if text is not None:
         # Remove the punctuation using the character deletion step of translate
         tokens = nltk.word_tokenize(text)
+        tokens = multi_word_tokenizer.tokenize(tokens)
         filtered = [w for w in tokens if w not in all_stopwords]
         filtered = [w for w in filtered if w not in string.punctuation]
         filtered = [item for item in filtered if not is_integer(item)]
@@ -131,10 +148,54 @@ def clean_up_string(s):
         s = re.sub(r"^[+-−.]?[0-9]+\*+$", "", s)
         # Remove special strings
         s = s.replace("o.ä.", "").replace("z.B.", "").replace("’’", "")
+        # Remove underscores _ from multi words tokenized text, e.g. Multiple_Sklerose
+        s = s.replace("_", " ")
         # Remove all strings that are smaller than 3 chars
         if len(s) <= 3:
             s = ""
     return s
+
+
+def find_chapters_with_tokens(soup, tokens):
+    """
+    Given a soup object representing the "Fachinfo" and a list of tokens/words,
+    extracts the ids of the chapters containing those words
+    :param soup: soup object
+    :param tokens: list of words to match
+    :return: dictionary of the form word -> string (chapter1,chapter2,...)
+    """
+    word_to_chapter_dict = {}
+
+    # Note to myself: gotta love list comprehensions
+    mw_set = set([mw.strip() for mw in multi_words])
+
+    # Extract all chapter ids
+    divs = soup.find_all("div", id=lambda x: x and (x.startswith("section") or x.startswith("Section")))
+    for div in divs:
+        # Get div id
+        id = div.get("id")
+        # Proceed only if its a section id
+        if id.startswith("section") or id.startswith("Section"):   # Sanity check
+            if div is not None:
+                div_text = div.get_text(separator=" ")
+                #
+                if div_text:
+                    div_list = get_tokens(div_text)
+                    div_list = [s.replace("_", " ") for s in div_list]
+                    word_set = (set(tokens) | mw_set) & set(div_list)
+                    #
+                    if word_set:
+                        # remove "section" or "Section" from id
+                        clean_id = id.replace("section", "").replace("Section", "")
+                        for w in word_set:
+                            if w not in word_to_chapter_dict:
+                                word_to_chapter_dict[w] = clean_id
+                            else:
+                                _entry = word_to_chapter_dict[w] + "," + clean_id
+                                word_to_chapter_dict[w] = _entry
+
+    return word_to_chapter_dict
+
 
 try:
     # Open connection to database
@@ -167,6 +228,17 @@ with open("./input/whitelist.txt", encoding="utf-8") as file:
         line = line.strip()
         white_words.append(line)
 
+# Read our list of multi words
+multi_words = []
+with open("./input/multiwords.txt", encoding="utf-8") as file:
+    for line in file:
+        line.strip()
+        multi_words.append(line)
+
+# Add multiwords to tokenizer
+for mw in multi_words:
+    multi_word_tokenizer.add_mwe(tuple(mw.strip().split(" ")))  # Needs a tuple
+
 # All stop words
 all_stopwords = set(stopwords.words('german')) | set(stop_words)
 
@@ -182,7 +254,7 @@ wr = csv.writer(csvfile, quoting=csv.QUOTE_NONE, delimiter=';')
 
 # Open stop_word file for write
 auto_stopwords_file = open("./output/auto_stopwords.csv", "w", newline="", encoding="utf-8")
-auto_wr = csv.writer(auto_stopwords_file, quoting=csv.QUOTE_NONE, delimiter=";")
+auto_stop_wr = csv.writer(auto_stopwords_file, quoting=csv.QUOTE_NONE, delimiter=";")
 
 # Column 5: swissmedic number 5
 # Column 15: html content
@@ -198,34 +270,47 @@ for i in range(0, len(rows)):
     if regnr:
         regnr = regnr.split(",")[0]
 
-    if regnr:   # regnr == "62313"
-        clean_text = remove_html_tags(html_content)
-        if clean_text:
-            tokens = get_tokens(clean_text)
-            tokens = [clean_up_string(t) for t in tokens]
-            count = Counter(tokens)
-            size = len(count)
-            frequency_list = sorted(list(count.most_common(size)))
+    if regnr:   # == "53225":   # regnr == "62313"
+        soup_object = remove_html_tags(html_content)
+        if soup_object:
+            clean_text = soup_object.get_text(separator=" ")
+            if clean_text:
+                tokens = get_tokens(clean_text)
+                # Note to myself: list comprehensions are cool!
+                tokens = [clean_up_string(t) for t in tokens]
+                # Remove empty strings (note: filter retuns a filter object -> needs to be transformed to list)
+                tokens = list(filter(None, tokens))
+                # Get word count
+                count = Counter(tokens)
+                size = len(count)
+                frequency_list = sorted(list(count.most_common(size)))
 
-            # Add to map
-            for word in frequency_list:
-                w = word[0]
-                if w:
-                    if w not in word_dict:
-                        word_dict[w] = regnr
-                    else:
-                        updated_entry = word_dict[w] + ", " + regnr
-                        word_dict[w] = updated_entry
+                # Dictionary of the form word -> string (chapter1,chapter2,...)
+                w_to_c_dict = find_chapters_with_tokens(soup_object, tokens)
 
-            print(title, frequency_list)
+                # Add to map
+                for word in frequency_list:
+                    w = word[0]
+                    if w:
+                        ch_ids = ""
+                        if w in w_to_c_dict:
+                            ch_ids = "(" + w_to_c_dict[w] + ")"
+                        regnr_prime = regnr + ch_ids
+                        if w not in word_dict:
+                            word_dict[w] = regnr_prime
+                        else:
+                            updated_entry = word_dict[w] + "," + regnr_prime
+                            word_dict[w] = updated_entry
+
+                print(title, frequency_list)
 
 for k in sorted(word_dict):
-    r = word_dict[k]
+    r = word_dict[k]    # registration number swissmedic-5
     # Change this number to increase or decrease the number of auto-generated stopwords
     if k not in white_words and len(r.split(",")) > 400:
-        auto_wr.writerow([k])
+        auto_stop_wr.writerow([k])
     else:
-        line = (k, r)
+        line = (k, r)       # word, registration numbers
         wr.writerow(line)
 
 end = time.time()

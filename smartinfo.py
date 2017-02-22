@@ -29,9 +29,6 @@ from nltk.tokenize.mwe import MWETokenizer
 multi_word_tokenizer = MWETokenizer()
 # multi_word_tokenizer.add_mwe(("Multiple", "Sklerose"))
 
-con = None
-rows = []
-
 chapter_ids = ["section1", "section2", "section3", "section4", "section5", "section6", "section7", "section8",
                "section9", "section10", "section11", "section12", "section13", "section14", "section15", "section16",
                "Section7000", "Section7050", "Section7100", "Section7150", "Section7200", "Section7250", "Section7350",
@@ -110,6 +107,7 @@ def get_tokens(text):
 def clean_up_string(s):
     """
     Cleans input string
+    Note: the regexes are not ORed for clearity
     :param s: string
     :return: clean string
     """
@@ -197,22 +195,28 @@ def find_chapters_with_tokens(soup, tokens):
     return word_to_chapter_dict
 
 
+# Check if directories exist, otherwise generate them
+if not os.path.exists("./output"):
+    os.makedirs("./output")
+
+
+# Open connection to database for reading
+con = None
+rows = []
 try:
-    # Open connection to database
     con = sql.connect("./dbs/amiko_db_full_idx_de.db")
     cur = con.cursor()
     # Retrieve all articles
     query = "SELECT * FROM amikodb"
     cur.execute(query)
     rows = cur.fetchall()
-
 except sql.Error:
     print("Error %s:" % sql.Error.args[0])
     sys.exit(1)
-
 finally:
     if con:
         con.close()
+
 
 # Read our stop words
 stop_words = []
@@ -242,13 +246,7 @@ for mw in multi_words:
 # All stop words
 all_stopwords = set(stopwords.words('german')) | set(stop_words)
 
-# Check if directories exist, otherwise generate them
-if not os.path.exists("./output"):
-    os.makedirs("./output")
-if not os.path.exists("./dbs"):
-    os.makedirs("./dbs")
-
-# Open file for write
+# Open frequency file for write
 csvfile = open("./output/frequency.csv", "w", newline="", encoding="utf-8")
 wr = csv.writer(csvfile, quoting=csv.QUOTE_NONE, delimiter=';')
 
@@ -256,8 +254,20 @@ wr = csv.writer(csvfile, quoting=csv.QUOTE_NONE, delimiter=';')
 auto_stopwords_file = open("./output/auto_stopwords.csv", "w", newline="", encoding="utf-8")
 auto_stop_wr = csv.writer(auto_stopwords_file, quoting=csv.QUOTE_NONE, delimiter=";")
 
-# Column 5: swissmedic number 5
-# Column 15: html content
+# Open connection to database for writing
+# Format with three columns
+#    id (primary key), keyword, regnr (chapter)
+try:
+    con = sql.connect("./output/amiko_frequency.db")
+    cur = con.cursor()
+    # Create a table with two columns
+    cur.execute("DROP TABLE IF EXISTS frequency")
+    cur.execute("CREATE TABLE frequency (id INTEGER PRIMARY_KEY, keyword TEXT, regnr TEXT);")
+    con.commit()
+except sql.Error:
+    sys.exit(1)
+
+# Start big loop
 start = time.time()
 word_dict = {}  # Empty dictionary
 
@@ -266,6 +276,8 @@ for i in range(0, len(rows)):
     title = title.replace(";", " ")
     html_content = rows[i][15]
 
+    # Column 5: swissmedic number 5
+    # Column 15: html content
     regnr = rows[i][5]
     if regnr:
         regnr = regnr.split(",")[0]
@@ -304,15 +316,28 @@ for i in range(0, len(rows)):
 
                 print(title, frequency_list)
 
+print("\n============================================================\n")
+cnt = 0
 for k in sorted(word_dict):
     r = word_dict[k]    # registration number swissmedic-5
     # Change this number to increase or decrease the number of auto-generated stopwords
     if k not in white_words and len(r.split(",")) > 400:
         auto_stop_wr.writerow([k])
     else:
+        cnt += 1
         line = (k, r)       # word, registration numbers
         wr.writerow(line)
+        if cnt % 100 == 0:
+            print("\rSaved: %d" % cnt, end='', flush=True)
+            con.commit()
+        query = "INSERT INTO frequency VALUES('%d', '%s', '%s');" % (cnt, k, r)
+        con.execute(query)
+
+if con:
+    con.commit()
+    con.close()
 
 end = time.time()
 
-print("\nElapsed time = %.3fs" % (end-start))
+print("\n\n============================================================\n")
+print("Elapsed time = %.3fs" % (end-start))

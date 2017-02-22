@@ -311,7 +311,7 @@ for i in range(0, len(rows)):
                         if w not in word_dict:
                             word_dict[w] = regnr_prime
                         else:
-                            updated_entry = word_dict[w] + "," + regnr_prime
+                            updated_entry = word_dict[w] + "|" + regnr_prime
                             word_dict[w] = updated_entry
 
                 print(title, frequency_list)

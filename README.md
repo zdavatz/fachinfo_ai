@@ -12,3 +12,6 @@ Doing NLTK and AI on Swiss Fachinfos with Python. Parsing all the important word
 * pip install nltk
 * python 3.5.2
 * nltk.download('stopwords','punkt')
+
+#### sqlite Database to download under the GPLv3.0 License
+* http://pillbox.oddb.org/amiko_frequency.db

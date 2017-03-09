@@ -25,6 +25,7 @@ Chlorid
 Citrat
 Clearance
 Depression
+Diabetes
 Dialyse
 Distribution
 Edetat
@@ -60,6 +61,7 @@ Inkompatibilitäten
 Inkompatibilitäten/Kompatibilitäten
 Inkompatible
 Instabilität
+Insulin
 Kalium
 Kalzium
 Kompatibilität
@@ -127,3 +129,5 @@ inkompatibel
 metabilsulfit
 HRT
 ITP
+CHC
+CYP2C19

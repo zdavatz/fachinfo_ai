@@ -100,7 +100,7 @@ def get_tokens(text):
         filtered = [w for w in tokens if w not in all_stopwords]
         filtered = [w for w in filtered if w not in string.punctuation]
         filtered = [item for item in filtered if not is_integer(item)]
-        filtered = [word for word in filtered if len(word) > 3]
+        filtered = [word for word in filtered if len(word) >= 3]
         return filtered
     return []
 
@@ -113,7 +113,6 @@ def clean_up_string(s):
     :return: clean string
     """
     if s is not None:
-        #
         chars = "\\`♠↔↓↑«»„“”®×'¹³’§‘≡✶•≙≤≥,·†‡‹›ˆ¶*"
         for c in chars:
             if c in s:
@@ -129,9 +128,9 @@ def clean_up_string(s):
         # Replace ' in numbers, e.g. 10'000 -> 10000
         s = re.sub(r"([+-]?[0-9]+)'([0-9]+)", r"\1\2", s)
         # Remove all numbers
-        s = re.sub(r"[+-]?[0-9]+.[0-9]+?", "", s)
+        s = re.sub(r"^[+-]?[0-9]+.[0-9]+?", "", s)
         # Remove all corpses from previous operation
-        s = re.sub(r"^[-|–]?(.)?[0-9]+$", "", s)
+        s = re.sub(r"^[-|–]?(.)?[0-9]+", "", s)
         # Replace all alpha only strings which start with '-'
         s = re.sub(r"^[-–./*+,](\D+)$", r"\1", s)
         # Remove all n=46
@@ -283,7 +282,7 @@ for i in range(0, len(rows)):
     if regnr:
         regnr = regnr.split(",")[0]
 
-    if regnr:   # regnr == "47311"
+    if regnr:   # == "32934":   # regnr == "47311"
         soup_object = remove_html_tags(html_content)
         if soup_object:
             clean_text = soup_object.get_text(separator=" ")
@@ -309,7 +308,6 @@ for i in range(0, len(rows)):
                         if w in w_to_c_dict:
                             ch_ids = "(" + w_to_c_dict[w] + ")"
                         regnr_prime = regnr + ch_ids
-
                         if w not in word_dict:
                             word_dict[w] = regnr_prime
                         else:

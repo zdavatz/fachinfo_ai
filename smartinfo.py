@@ -20,6 +20,7 @@ import csv
 import time
 import re
 import os
+import hashlib
 
 from collections import Counter
 from bs4 import BeautifulSoup
@@ -262,7 +263,7 @@ try:
     cur = con.cursor()
     # Create a table with two columns
     cur.execute("DROP TABLE IF EXISTS frequency")
-    cur.execute("CREATE TABLE frequency (id INTEGER PRIMARY_KEY, keyword TEXT, regnr TEXT);")
+    cur.execute("CREATE TABLE frequency (id TEXT PRIMARY_KEY, keyword TEXT, regnr TEXT);")
     con.commit()
 except sql.Error:
     sys.exit(1)
@@ -330,7 +331,9 @@ for k in sorted(word_dict):
         if cnt % 100 == 0:
             print("\rSaved: %d" % cnt, end='', flush=True)
             con.commit()
-        query = "INSERT INTO frequency VALUES('%d', '%s', '%s');" % (cnt, k, r)
+        # Generate 16 byte hash
+        hash = hashlib.sha256(k.encode('utf-8')).hexdigest()[:10]
+        query = "INSERT INTO frequency VALUES('%s', '%s', '%s');" % (hash, k, r)
         con.execute(query)
 
 if con:

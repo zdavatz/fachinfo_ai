@@ -283,7 +283,7 @@ for i in range(0, len(rows)):
     if regnr:
         regnr = regnr.split(",")[0]
 
-    if regnr:   # == "53225":   # regnr == "62313"
+    if regnr:   # regnr == "47311"
         soup_object = remove_html_tags(html_content)
         if soup_object:
             clean_text = soup_object.get_text(separator=" ")
@@ -309,6 +309,7 @@ for i in range(0, len(rows)):
                         if w in w_to_c_dict:
                             ch_ids = "(" + w_to_c_dict[w] + ")"
                         regnr_prime = regnr + ch_ids
+
                         if w not in word_dict:
                             word_dict[w] = regnr_prime
                         else:
@@ -332,8 +333,8 @@ for k in sorted(word_dict):
             print("\rSaved: %d" % cnt, end='', flush=True)
             con.commit()
         # Generate 16 byte hash
-        hash = hashlib.sha256(k.encode('utf-8')).hexdigest()[:10]
-        query = "INSERT INTO frequency VALUES('%s', '%s', '%s');" % (hash, k, r)
+        hashed_k = hashlib.sha256(k.encode('utf-8')).hexdigest()[:10]
+        query = "INSERT INTO frequency VALUES('%s', '%s', '%s');" % (hashed_k, k, r)
         con.execute(query)
 
 if con:

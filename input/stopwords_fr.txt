@@ -18,6 +18,7 @@ alors
 anterieur
 anterieure
 anterieures
+attention
 apres
 après
 as
@@ -148,6 +149,7 @@ derniere
 derriere
 derrière
 des
+description
 desormais
 desquelles
 desquels

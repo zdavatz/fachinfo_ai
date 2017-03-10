@@ -100,7 +100,7 @@ def get_tokens(text):
         # Remove the punctuation using the character deletion step of translate
         tokens = nltk.word_tokenize(text)
         tokens = multi_word_tokenizer.tokenize(tokens)
-        filtered = [w for w in tokens if w not in list_of_stopwords]
+        filtered = [w for w in tokens if (w not in list_of_stopwords and w.lower() not in list_of_stopwords)]
         filtered = [w for w in filtered if w not in string.punctuation]
         filtered = [item for item in filtered if not is_integer(item)]
         filtered = [word for word in filtered if len(word) >= 3]
@@ -112,6 +112,7 @@ def clean_up_string(lang, s):
     """
     Cleans input string
     Note: the regexes are not ORed for clearity
+    :param lang: language
     :param s: string
     :return: clean string
     """
@@ -280,7 +281,11 @@ def main(argv):
     auto_stop_wr = csv.writer(auto_stopwords_file, quoting=csv.QUOTE_NONE, delimiter=";")
 
     # All stop words
-    list_of_stopwords = set(stopwords.words("german")) | set(stop_words)
+    global list_of_stopwords
+    if lang == "de":
+        list_of_stopwords = set(stopwords.words("german")) | set(stop_words)
+    elif lang == "fr":
+        list_of_stopwords = set(stopwords.words("french")) | set(stop_words)
 
     # Open connection to database for writing
     # Format with three columns

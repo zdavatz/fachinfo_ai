@@ -307,7 +307,7 @@ def main(argv):
     start = time.time()
     word_dict = {}  # Empty dictionary
 
-    for i in range(0, 1000):    # len(rows)):
+    for i in range(0, len(rows)):
         title = rows[i][1]
         title = title.replace(";", " ")
         html_content = rows[i][15]

@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e3710d69-3647-4b19-a557-dd436b6a2880" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/input/whitelist.txt" afterPath="$PROJECT_DIR$/input/whitelist.txt" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/input/multiwords.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/input/stopwords.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/input/whitelist.txt" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smartinfo.py" afterPath="$PROJECT_DIR$/smartinfo.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,11 +26,10 @@
       <file leaf-file-name="smartinfo.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/smartinfo.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="121" column="13" lean-forward="true" selection-start-line="121" selection-start-column="13" selection-end-line="121" selection-end-column="13" />
+            <state relative-caret-position="103">
+              <caret line="296" column="20" lean-forward="true" selection-start-line="296" selection-start-column="20" selection-end-line="296" selection-end-column="20" />
               <folding>
                 <element signature="e#467#477#0" expanded="true" />
-                <element signature="e#1315#1461#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -67,6 +67,9 @@
       <find>print</find>
       <find>clean_up_str</find>
       <find>clean_up_string</find>
+      <find>all_stopwords</find>
+      <find>rows</find>
+      <find>find_chapters_with_tokens</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -80,10 +83,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1540" />
-    <option name="y" value="124" />
+    <option name="x" value="1468" />
     <option name="width" value="1873" />
-    <option name="height" value="1207" />
+    <option name="height" value="1447" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -153,8 +155,8 @@
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="Errors" />
   </component>
-  <component name="RunManager" selected="Python.smartinfo">
-    <configuration default="false" name="smartinfo" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.smartinfo_de">
+    <configuration default="false" name="smartinfo_de" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -306,11 +308,11 @@
       <method />
     </configuration>
     <list size="1">
-      <item index="0" class="java.lang.String" itemvalue="Python.smartinfo" />
+      <item index="0" class="java.lang.String" itemvalue="Python.smartinfo_de" />
     </list>
     <recent_temporary>
       <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="Python.smartinfo" />
+        <item index="0" class="java.lang.String" itemvalue="Python.smartinfo_de" />
       </list>
     </recent_temporary>
   </component>
@@ -337,7 +339,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1540" y="124" width="1873" height="1207" extended-state="0" />
+    <frame x="1468" y="0" width="1873" height="1447" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11577813" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -345,7 +347,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.355273" sideWeight="0.50213027" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984293" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.43117595" sideWeight="0.49786976" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30516082" sideWeight="0.49786976" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -377,7 +379,6 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#467#477#0" expanded="true" />
-            <element signature="e#1315#1461#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -388,7 +389,6 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#467#477#0" expanded="true" />
-            <element signature="e#1315#1461#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -399,7 +399,6 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#467#477#0" expanded="true" />
-            <element signature="e#1315#1461#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -410,7 +409,6 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#467#477#0" expanded="true" />
-            <element signature="e#1315#1461#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -421,7 +419,6 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#467#477#0" expanded="true" />
-            <element signature="e#1315#1461#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -432,7 +429,6 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#467#477#0" expanded="true" />
-            <element signature="e#1315#1461#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -443,7 +439,6 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#467#477#0" expanded="true" />
-            <element signature="e#1315#1461#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -454,7 +449,6 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#467#477#0" expanded="true" />
-            <element signature="e#1315#1461#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -465,7 +459,6 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#467#477#0" expanded="true" />
-            <element signature="e#1315#1461#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -476,7 +469,6 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#467#477#0" expanded="true" />
-            <element signature="e#1315#1461#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -490,11 +482,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/smartinfo.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="121" column="13" lean-forward="true" selection-start-line="121" selection-start-column="13" selection-end-line="121" selection-end-column="13" />
+        <state relative-caret-position="103">
+          <caret line="296" column="20" lean-forward="true" selection-start-line="296" selection-start-column="20" selection-end-line="296" selection-end-column="20" />
           <folding>
             <element signature="e#467#477#0" expanded="true" />
-            <element signature="e#1315#1461#0" expanded="false" />
           </folding>
         </state>
       </provider>

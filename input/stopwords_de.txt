@@ -1,4 +1,7 @@
 ﻿
+Acht
+Achten
+Achtundvierzig
 ALLE
 Alle
 Allgemeine
@@ -56,6 +59,15 @@ denen
 deren
 deshalb
 d.h.
+drei
+drei-
+eher
+ein
+einem
+einen
+einer
+eines
+eines/einer
 etwa
 etc
 etc.
@@ -117,6 +129,11 @@ zeigen
 zeigt
 zeigte
 zeigten
+zumal
+zumindest
+zusammen
+zuvor
+zwar
 zudem
 zusammen
 zusätzlich

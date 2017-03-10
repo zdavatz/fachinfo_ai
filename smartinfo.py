@@ -218,14 +218,15 @@ def main(argv):
     # Language flag
     lang = "de"
     try:
-        opts, args = getopt.getopt(argv, "hlang:")
+        opts, args = getopt.getopt(argv, "hlang:", ["lang="])
     except getopt.GetoptError:
-        print("smartinfo.py -lang <language>")
+        print("smartinfo.py --lang <language>")
         sys.exit(2)
     for opt, arg in opts:
         if opt == "-h":
-            print("smartinfo.py -lang <language>")
-        if opt == "-lang":
+            print("smartinfo.py --lang <language>")
+            sys.exit(2)
+        if opt in ("-l", "--lang"):
             lang = arg
 
     # Open connection to database for reading
@@ -301,7 +302,7 @@ def main(argv):
     # Note to myself: gotta love list comprehensions
     mw_set = set([mw.strip() for mw in multi_words])
 
-    for i in range(0, 50):   # len(rows)):
+    for i in range(0, len(rows)):
         title = rows[i][1]
         title = title.replace(";", " ")
         html_content = rows[i][15]

@@ -272,6 +272,9 @@ def main(argv):
     for mw in multi_words:
         multi_word_tokenizer.add_mwe(tuple(mw.strip().split(" ")))  # Needs a tuple
 
+    # Note to myself: gotta love list comprehensions
+    mw_set = set([mw.strip() for mw in multi_words])
+
     # Open frequency file for write
     csvfile = open("./output/" + frequency_file[lang], "w", newline="", encoding="utf-8")
     wr = csv.writer(csvfile, quoting=csv.QUOTE_NONE, delimiter=';')
@@ -304,10 +307,7 @@ def main(argv):
     start = time.time()
     word_dict = {}  # Empty dictionary
 
-    # Note to myself: gotta love list comprehensions
-    mw_set = set([mw.strip() for mw in multi_words])
-
-    for i in range(0, len(rows)):
+    for i in range(0, 1000):    # len(rows)):
         title = rows[i][1]
         title = title.replace(";", " ")
         html_content = rows[i][15]
@@ -318,7 +318,7 @@ def main(argv):
         if regnr:
             regnr = regnr.split(",")[0]
 
-        if regnr:   # regnr == "47311"
+        if regnr:   # == "63174":
             soup_object = remove_html_tags(html_content)
             if soup_object:
                 clean_text = soup_object.get_text(separator=" ")
@@ -357,8 +357,9 @@ def main(argv):
     for k in sorted(word_dict):
         r = word_dict[k]    # registration number swissmedic-5
         # Change this number to increase or decrease the number of auto-generated stopwords
-        if k not in white_words and len(r.split(",")) > 400:
-            auto_stop_wr.writerow([k])
+        word_count = len(r.split(","))
+        if k not in white_words and word_count > 400:
+            auto_stop_wr.writerow((k, word_count))
         else:
             cnt += 1
             line = (k, r)       # word, registration numbers

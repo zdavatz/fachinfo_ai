@@ -250,23 +250,17 @@ def main(argv):
     # Read our stop words
     stop_words = []
     with open("./input/" + stopwords_file[lang], encoding="utf-8") as file:
-        for line in file:
-            line = line.strip()
-            stop_words.append(line)
+        stop_words = [line.strip() for line in file]
 
     # Read our whitelist words
     white_words = []
     with open("./input/" + whitelist_file[lang], encoding="utf-8") as file:
-        for line in file:
-            line = line.strip()
-            white_words.append(line)
+        white_words = [line.strip() for line in file]
 
     # Read our list of multi words
     multi_words = []
     with open("./input/" + multiwords_file[lang], encoding="utf-8") as file:
-        for line in file:
-            line.strip()
-            multi_words.append(line)
+        multi_words = [line.rstrip() for line in file]
 
     # Add multiwords to tokenizer
     for mw in multi_words:
@@ -307,7 +301,7 @@ def main(argv):
     start = time.time()
     word_dict = {}  # Empty dictionary
 
-    for i in range(0, len(rows)):
+    for i in range(0, 100): #len(rows)):
         title = rows[i][1]
         title = title.replace(";", " ")
         html_content = rows[i][15]
@@ -318,7 +312,7 @@ def main(argv):
         if regnr:
             regnr = regnr.split(",")[0]
 
-        if regnr:   # == "63174":
+        if regnr:   # == "63175":
             soup_object = remove_html_tags(html_content)
             if soup_object:
                 clean_text = soup_object.get_text(separator=" ")
@@ -358,7 +352,11 @@ def main(argv):
         r = word_dict[k]    # registration number swissmedic-5
         # Change this number to increase or decrease the number of auto-generated stopwords
         word_count = len(r.split(","))
-        if k not in white_words and word_count > 400:
+
+        if k in multi_words:
+            print(k)
+
+        if k not in white_words and k not in multi_words and word_count > 600:
             auto_stop_wr.writerow((k, word_count))
         else:
             cnt += 1

@@ -624,7 +624,6 @@ freier
 freies
 fuer
 fuers
-fÃ¼r
 fünf
 für
 fürs
@@ -955,8 +954,6 @@ konnten
 kuenftig
 kuerzlich
 kuerzlichst
-kÃ¶nnen
-kÃ¶nnte
 käumlich
 könn
 können
@@ -1761,9 +1758,6 @@ worin
 wurde
 wurden
 www
-wÃ¤hrend
-wÃ¼rde
-wÃ¼rden
 während
 währenddessen
 wär

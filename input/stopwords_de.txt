@@ -7,8 +7,8 @@ abgerufene
 abgerufener
 abgerufenes
 acht
-achtundvierzig
 achten
+achtundvierzig
 acute
 aehnlich
 aehnliche
@@ -311,7 +311,6 @@ content
 d.h.
 da
 da?
-dat
 dabei
 dadurch
 dafuer
@@ -355,10 +354,12 @@ darüberhinaus
 das
 dass
 dasselbe
+dat
 davon
 davor
 dazu
 dazwischen
+daÃŸ
 daß
 dein
 deine
@@ -623,6 +624,7 @@ freier
 freies
 fuer
 fuers
+fÃ¼r
 fünf
 für
 fürs
@@ -953,6 +955,8 @@ konnten
 kuenftig
 kuerzlich
 kuerzlichst
+kÃ¶nnen
+kÃ¶nnte
 käumlich
 könn
 können
@@ -1386,6 +1390,7 @@ startete
 starteten
 statt
 stattdessen
+std
 steht
 steige
 steigen
@@ -1394,7 +1399,6 @@ stellenweise
 stellenweisem
 stellenweisen
 stets
-std
 stieg
 stiegen
 such
@@ -1757,6 +1761,9 @@ worin
 wurde
 wurden
 www
+wÃ¤hrend
+wÃ¼rde
+wÃ¼rden
 während
 währenddessen
 wär
@@ -1832,6 +1839,7 @@ zweiten
 zwischen
 zwölf
 zählen
+Ã¼ber
 Änderung
 Änderungen
 Über

@@ -18,12 +18,12 @@ alors
 anterieur
 anterieure
 anterieures
-attention
 apres
 après
 as
 assez
 attendu
+attention
 au
 aucun
 aucune
@@ -63,6 +63,9 @@ avions
 avoir
 avons
 ayant
+ayante
+ayantes
+ayants
 ayez
 ayons
 b
@@ -239,6 +242,9 @@ exactement
 excepté
 extenso
 exterieur
+eÃ»mes
+eÃ»t
+eÃ»tes
 eûmes
 eût
 eûtes
@@ -264,6 +270,9 @@ fusses
 fussiez
 fussions
 fut
+fÃ»mes
+fÃ»t
+fÃ»tes
 fûmes
 fût
 fûtes
@@ -353,6 +362,7 @@ mot
 moyennant
 multiple
 multiples
+mÃªme
 même
 mêmes
 n
@@ -679,6 +689,9 @@ zut
 étais
 était
 étant
+étante
+étantes
+étants
 état
 étiez
 étions

@@ -7,8 +7,8 @@ abgerufene
 abgerufener
 abgerufenes
 acht
-achtundvierzig
 achten
+achtundvierzig
 acute
 aehnlich
 aehnliche
@@ -311,7 +311,6 @@ content
 d.h.
 da
 da?
-dat
 dabei
 dadurch
 dafuer
@@ -355,10 +354,12 @@ darüberhinaus
 das
 dass
 dasselbe
+dat
 davon
 davor
 dazu
 dazwischen
+daÃŸ
 daß
 dein
 deine
@@ -1386,6 +1387,7 @@ startete
 starteten
 statt
 stattdessen
+std
 steht
 steige
 steigen
@@ -1394,7 +1396,6 @@ stellenweise
 stellenweisem
 stellenweisen
 stets
-std
 stieg
 stiegen
 such
@@ -1832,6 +1833,7 @@ zweiten
 zwischen
 zwölf
 zählen
+Ã¼ber
 Änderung
 Änderungen
 Über

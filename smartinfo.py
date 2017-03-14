@@ -161,7 +161,7 @@ def clean_up_string(lang, s):
         # Remove all strings that are smaller than 3 chars
         if len(s) <= 3:
             s = ""
-    return s
+    return s    # s.encode('utf-8')
 
 
 def find_chapters_with_tokens(soup, tokens, mw_set):
@@ -352,9 +352,6 @@ def main(argv):
         r = word_dict[k]    # registration number swissmedic-5
         # Change this number to increase or decrease the number of auto-generated stopwords
         word_count = len(r.split(","))
-
-        if k in multi_words:
-            print(k)
 
         if k not in white_words and k not in multi_words and word_count > 600:
             auto_stop_wr.writerow((k, word_count))

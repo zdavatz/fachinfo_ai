@@ -25,7 +25,7 @@ import hashlib
 
 from collections import Counter
 from bs4 import BeautifulSoup
-from nltk.corpus import stopwords
+# from nltk.corpus import stopwords
 from nltk.tokenize.mwe import MWETokenizer
 
 multi_word_tokenizer = MWETokenizer()
@@ -280,9 +280,9 @@ def main(argv):
     # All stop words
     global list_of_stopwords
     if lang == "de":
-        list_of_stopwords = set(stopwords.words("german")) | set(stop_words)
+        list_of_stopwords = set(stop_words)  # | set(stopwords.words("german"))
     elif lang == "fr":
-        list_of_stopwords = set(stopwords.words("french")) | set(stop_words)
+        list_of_stopwords = set(stop_words)  # | set(stopwords.words("french"))
 
     # Open connection to database for writing
     # Format with three columns

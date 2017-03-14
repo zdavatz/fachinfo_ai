@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e3710d69-3647-4b19-a557-dd436b6a2880" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/smartinfo.py" afterPath="$PROJECT_DIR$/smartinfo.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,8 +24,8 @@
       <file leaf-file-name="smartinfo.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/smartinfo.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="303" column="22" lean-forward="false" selection-start-line="303" selection-start-column="22" selection-end-line="303" selection-end-column="22" />
+            <state relative-caret-position="1076">
+              <caret line="303" column="33" lean-forward="true" selection-start-line="303" selection-start-column="33" selection-end-line="303" selection-end-column="33" />
               <folding>
                 <element signature="e#467#477#0" expanded="true" />
               </folding>
@@ -66,13 +67,13 @@
       <find>all_stopwords</find>
       <find>rows</find>
       <find>find_chapters_with_tokens</find>
-      <find>stopwords</find>
       <find>multiwords_file</find>
       <find>mw_set</find>
       <find>white_words</find>
       <find>multi_</find>
       <find>lo</find>
       <find>stop_words</find>
+      <find>stopwords</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -86,8 +87,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1212" />
-    <option name="width" value="1464" />
+    <option name="x" value="1041" />
+    <option name="width" value="1698" />
     <option name="height" value="1447" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -124,7 +125,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -139,6 +139,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="Scope">
         <subPane subId="Project Files">
           <PATH>
@@ -360,10 +361,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1212" y="0" width="1464" height="1447" extended-state="0" />
+    <frame x="1041" y="0" width="1698" height="1447" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14848067" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12782402" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.355273" sideWeight="0.50213027" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -504,6 +505,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/smartinfo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#467#477#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$USER_HOME$/.PyCharmCE2016.3/system/python_stubs/-1282051629/builtins.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="278">
@@ -513,8 +524,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/smartinfo.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="303" column="22" lean-forward="false" selection-start-line="303" selection-start-column="22" selection-end-line="303" selection-end-column="22" />
+        <state relative-caret-position="1076">
+          <caret line="303" column="33" lean-forward="true" selection-start-line="303" selection-start-column="33" selection-end-line="303" selection-end-column="33" />
           <folding>
             <element signature="e#467#477#0" expanded="true" />
           </folding>

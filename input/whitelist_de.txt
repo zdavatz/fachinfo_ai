@@ -132,3 +132,5 @@ ITP
 CHC
 CYP2C19
 CYP3A4
+Schwindel
+Schmerzen

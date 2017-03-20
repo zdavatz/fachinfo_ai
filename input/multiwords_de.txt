@@ -42,3 +42,5 @@ rheumatoider Arthritis
 Systemischen Lupus Erythematodes
 zentralen Nervensystems
 zentrales Nervensystem
+Hepatische Tests
+Hepatischer Test

@@ -12,6 +12,7 @@
 #   Auto-generated stopwords file in folder output (filename: auto_stopwords.csv)
 #
 
+from __future__ import print_function
 import sys
 import getopt
 import sqlite3 as sql

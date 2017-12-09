@@ -11,3 +11,17 @@ intraveineuse
 nerveux
 tachycardie
 vasculaire
+(E200)
+(E210)
+(E214)
+(E218)
+(E221)
+(E222)
+(E223)
+(E233)
+(E250)
+(E260)
+(E262)
+(E270)
+(E296)
+(E297)

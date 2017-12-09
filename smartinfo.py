@@ -141,19 +141,23 @@ def clean_up_string(lang, s):
         s = re.sub(r"([+-]?[0-9]+)'([0-9]+)", r"\1\2", s)
         # Remove all numbers
         s = re.sub(r"^[+-]?[0-9]+.[0-9]+?", "", s)
-        # Remove all corpses from previous operation
-        s = re.sub(r"^[-|–]?(.)?[0-9]+", "", s)
+        # Remove all corpses from previous operation (exclude E-numbers, e.g. E218)
+        if not s.startswith("E"):
+            s = re.sub(r"^[-|–]?(.)?[0-9]+", "", s)
         # Replace all alpha only strings which start with '-'
         s = re.sub(r"^[-–./*+,](\D+)$", r"\1", s)
         # Remove all n=46
         s = re.sub(r"(\*|-[0-9]+|[0-9]+)n=[0-9]+", "", s)
-        # Remove all ...xxx kind of strings
-        s = re.sub(r"^...[0-9]+$|^-[0-9]+", "", s)
+        # Remove all ...xxx kind of strings (exclude E-numbers, e.g. E218)
+        if not s.startswith("E"):
+            s = re.sub(r"^...[0-9]+$|^-[0-9]+", "", s)
+
         # Remove all strings that start with / or start with ,
         if s.startswith("/"):
             s = ""
         if s.startswith("‚"):
             s = s[1:]
+
         # Remove all strings with this format (+/-)60**
         s = re.sub(r"^[+-−.]?[0-9]+\*+$", "", s)
         # Remove underscores _ from multi words tokenized text, e.g. Multiple_Sklerose

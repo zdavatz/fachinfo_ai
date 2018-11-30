@@ -2,6 +2,13 @@ aneurysmatischen Subarachnoidalblutungen
 aneurysmatische Subarachnoidalblutung
 Angina pectoris
 bikonvexe Filmtablette
+langsamen Metabolisierern
+langsame Metabolisierer
+schnellen Metabolisierern
+schnelle Metabolisierer
+extensive metabolisers
+poor metabolisers
+genetischen Polymorphismus
 bipolare Störung
 chronischer Hepatitis C
 chronische Hepatitis C
@@ -28,6 +35,8 @@ Multiple Sklerose
 Multipler Sklerose
 Multiplen Sklerose
 multiple sclerosis
+Pharmakogenetische Untersuchungen
+Pharmakogenetische Untersuchung
 psychotische Störung
 pulmonale arterielle Hypertonie
 pulmonaler arterieller Hypertonie
@@ -57,3 +66,31 @@ Natrium hydrogensulfit
 Natrium metabisulfite
 Natroium nitrit
 Natrium azetate
+Zaditen Ophtha SDU
+Zaditen Ophtha
+Zavedos Lyophilisat
+Zavedos Solution
+Zeel comp.
+Zeller Balsam
+Zeller Entspannung
+Zeller Feigen mit Senna
+Zeller Herz und Nerven
+Zeller Herz
+Zeller Heuschnupfen
+Zeller Magen
+Zeller Schlaf forte
+Zeller Schlaf
+Zenzi Gynial
+Zepatier Filmtabletten
+Zestoretic mite
+ZinCream Medinova
+Zink Biomed
+Zinkokehl D3
+Zinkokehl D4
+Zithromax Uno
+Zoladex LA SafeSystem
+Zoladex SafeSystem
+Zolben C
+Zoledronat Axapharm Osteo
+Zoledronat Fresenius Onco
+Zoledronat Onco Labatec

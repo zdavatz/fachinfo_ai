@@ -215,3 +215,5 @@ Zyvoxid
 injizieren
 inkompatibel
 metabilsulfit
+G6PD-Mangel
+G6PD

@@ -141,8 +141,8 @@ def clean_up_string(lang, s):
         s = re.sub(r"([+-]?[0-9]+)'([0-9]+)", r"\1\2", s)
         # Remove all numbers
         s = re.sub(r"^[+-]?[0-9]+.[0-9]+?", "", s)
-        # Remove all corpses from previous operation (exclude E-numbers, e.g. E218)
-        if not s.startswith("E"):
+        # Remove all corpses from previous operation (exclude E-numbers, e.g. E218, G6PD, G6PD-Mangel, see issue #5)
+        if not s.startswith("E") and not s.startswith("G"):
             s = re.sub(r"^[-|–]?(.)?[0-9]+", "", s)
         # Replace all alpha only strings which start with '-'
         s = re.sub(r"^[-–./*+,](\D+)$", r"\1", s)

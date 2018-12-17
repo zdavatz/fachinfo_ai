@@ -117,7 +117,7 @@ def clean_up_string(lang, s):
     :return: clean string
     """
     if s is not None:
-        chars = "\\`♠↔↓↑«»„“”®×'¹³’§‘≡✶•≙≤≥,·†‡‹›ˆ¶*"
+        chars = "\\`♠↔↓↑«»„“”®'¹³’§‘≡✶•≙≤≥,·†‡‹›ˆ¶"
         for c in chars:
             if c in s:
                 s = s.replace(c, "")

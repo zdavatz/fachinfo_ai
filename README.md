@@ -18,6 +18,7 @@ Doing NLTK and AI on Swiss Fachinfos with Python. Parsing all the important word
 * nltk.download('stopwords','punkt')
 
 #### For Mac
+* https://github.com/sashkab/homebrew-python
 * install [zlib](https://www.zlib.net/zlib-1.2.11.tar.gz) from source
 * configure python with `./configure --with-zlib-dir=/usr/local`
 * grab [git-pip.py](https://bootstrap.pypa.io/get-pip.py)

@@ -12,7 +12,7 @@ Doing NLTK and AI on Swiss Fachinfos with Python. Parsing all the important word
 * Frequency csv file in folder output (filename: frequency.csv)
 * Auto-generated stopwords file in folder output (filename: auto_stopwords.csv)
 
-#### Requirements
+#### Requirements for Linux
 * pip install nltk
 * [python 3.5.2](https://www.python.org/ftp/python/3.5.2/Python-3.5.2.tgz)
 * nltk.download('stopwords','punkt')
@@ -21,6 +21,10 @@ Doing NLTK and AI on Swiss Fachinfos with Python. Parsing all the important word
 * https://github.com/sashkab/homebrew-python
 * brew tap sashkab/python
 * brew install python35
+* sudo /usr/local/Cellar/python35/3.5.6_2/Frameworks/Python.framework/Versions/3.5/bin/pip3.5  install nltk
+* sudo /usr/local/Cellar/python35/3.5.6_2/Frameworks/Python.framework/Versions/3.5/bin/pip3.5  install bs4
+* sudo /usr/local/Cellar/python35/3.5.6_2/Frameworks/Python.framework/Versions/3.5/bin/pip3.5  install lxml
+* /usr/local/opt/python35/bin/python3.5 -> import nltk -> nltk.download('stopwords','punkt')
 
 #### sqlite Database to download under the GPLv3.0 License
 * http://pillbox.oddb.org/amiko_frequency.db

@@ -32,7 +32,7 @@ sudo /usr/local/Cellar/python35/3.5.6_2/Frameworks/Python.framework/Versions/3.5
 cd $SRC
 ```
 in the Python interactive shell do `import nltk` and then do `nltk.download('stopwords','punkt')`
-then run `/usr/local/bin/python3 smartinfo.py --lang=de`
+then run `/usr/local/opt/python35/bin/python3.5 smartinfo.py --lang=fr`
 
 
 #### sqlite Database to download under the GPLv3.0 License

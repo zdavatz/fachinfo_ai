@@ -22,6 +22,8 @@ Doing NLTK and AI on Swiss Fachinfos with Python. Parsing all the important word
 ```
 brew tap sashkab/python
 brew install python35
+cd $HOME
+wget https://bootstrap.pypa.io/get-pip.py
 sudo /usr/local/opt/python35/bin/python3.5 $HOME/software/get-pip.py
 sudo /usr/local/Cellar/python35/3.5.6_2/Frameworks/Python.framework/Versions/3.5/bin/pip3.5  install nltk
 sudo /usr/local/Cellar/python35/3.5.6_2/Frameworks/Python.framework/Versions/3.5/bin/pip3.5  install bs4

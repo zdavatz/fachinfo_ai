@@ -30,6 +30,7 @@ sudo /usr/local/Cellar/python35/3.5.6_2/Frameworks/Python.framework/Versions/3.5
 sudo /usr/local/Cellar/python35/3.5.6_2/Frameworks/Python.framework/Versions/3.5/bin/pip3.5  install lxml
 /usr/local/opt/python35/bin/python3.5
 cd $SRC
+mkdir dbs
 ```
 in the Python interactive shell do `import nltk` and then do `nltk.download('stopwords')` and `nltk.download('punkt')`
 then run `/usr/local/opt/python35/bin/python3.5 smartinfo.py --lang=fr`

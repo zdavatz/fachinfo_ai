@@ -28,8 +28,10 @@ sudo /usr/local/opt/python35/bin/python3.5 $HOME/software/get-pip.py
 sudo /usr/local/Cellar/python35/3.5.6_2/Frameworks/Python.framework/Versions/3.5/bin/pip3.5  install nltk
 sudo /usr/local/Cellar/python35/3.5.6_2/Frameworks/Python.framework/Versions/3.5/bin/pip3.5  install bs4
 sudo /usr/local/Cellar/python35/3.5.6_2/Frameworks/Python.framework/Versions/3.5/bin/pip3.5  install lxml
-/usr/local/opt/python35/bin/python3.5 -> import nltk -> nltk.download('stopwords','punkt')
+/usr/local/opt/python35/bin/python3.5
 ```
+in the Python interactive shell do `import nltk` and then doe `nltk.download('stopwords','punkt')`
+
 
 #### sqlite Database to download under the GPLv3.0 License
 * http://pillbox.oddb.org/amiko_frequency.db

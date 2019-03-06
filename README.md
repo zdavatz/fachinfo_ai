@@ -19,10 +19,8 @@ Doing NLTK and AI on Swiss Fachinfos with Python. Parsing all the important word
 
 #### For Mac
 * https://github.com/sashkab/homebrew-python
-* install [zlib](https://www.zlib.net/zlib-1.2.11.tar.gz) from source
-* configure python with `./configure --with-zlib-dir=/usr/local`
-* grab [git-pip.py](https://bootstrap.pypa.io/get-pip.py)
-* do `/usr/local/bin/python3.5 get-pip.py`
+* brew tap sashkab/python
+* brew install python35
 
 #### sqlite Database to download under the GPLv3.0 License
 * http://pillbox.oddb.org/amiko_frequency.db

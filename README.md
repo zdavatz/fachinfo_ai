@@ -5,7 +5,9 @@ Doing NLTK and AI on Swiss Fachinfos with Python. Parsing all the important word
 * Amiko sqlite DB in folder dbs (filename: amiko_db_full_idx_de.db)
 
 #### Setup:
-* Create `dbs` dir and put the files generated with [cpp2sqlite](https://github.com/zdavatz/cpp2sqlite) there.
+* Create `dbs` dir and put the files generated with [cpp2sqlite](https://github.com/zdavatz/cpp2sqlite) there:
+** amiko_db_full_idx_de.db
+** amiko_db_full_idx_fr.db
 * Run with `/usr/local/bin/python3 smartinfo.py --lang=de`
 
 #### Output:

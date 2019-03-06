@@ -30,7 +30,7 @@ sudo /usr/local/Cellar/python35/3.5.6_2/Frameworks/Python.framework/Versions/3.5
 sudo /usr/local/Cellar/python35/3.5.6_2/Frameworks/Python.framework/Versions/3.5/bin/pip3.5  install lxml
 /usr/local/opt/python35/bin/python3.5
 ```
-in the Python interactive shell do `import nltk` and then doe `nltk.download('stopwords','punkt')`
+in the Python interactive shell do `import nltk` and then do `nltk.download('stopwords','punkt')`
 
 
 #### sqlite Database to download under the GPLv3.0 License

@@ -31,7 +31,7 @@ sudo /usr/local/Cellar/python35/3.5.6_2/Frameworks/Python.framework/Versions/3.5
 /usr/local/opt/python35/bin/python3.5
 cd $SRC
 ```
-in the Python interactive shell do `import nltk` and then do `nltk.download('stopwords','punkt')`
+in the Python interactive shell do `import nltk` and then do `nltk.download('stopwords')` and `nltk.download('punkt')`
 then run `/usr/local/opt/python35/bin/python3.5 smartinfo.py --lang=fr`
 
 

@@ -4,6 +4,10 @@ Doing NLTK and AI on Swiss Fachinfos with Python. Parsing all the important word
 * List of stopwords in folder input (filename: stopwords.txt)
 * Amiko sqlite DB in folder dbs (filename: amiko_db_full_idx_de.db)
 
+#### Setup:
+* Create `dbs` dir and put the files generated with [cpp2sqlite](https://github.com/zdavatz/cpp2sqlite) there.
+* Run with `/usr/local/bin/python3 smartinfo.py --lang=de`
+
 #### Output:
 * Frequency csv file in folder output (filename: frequency.csv)
 * Auto-generated stopwords file in folder output (filename: auto_stopwords.csv)

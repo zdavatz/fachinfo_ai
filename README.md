@@ -14,7 +14,7 @@ Doing NLTK and AI on Swiss Fachinfos with Python. Parsing all the important word
 
 #### Requirements
 * pip install nltk
-* python 3.5.2
+* [python 3.5.2](https://www.python.org/downloads/release/python-352/)
 * nltk.download('stopwords','punkt')
 
 #### sqlite Database to download under the GPLv3.0 License

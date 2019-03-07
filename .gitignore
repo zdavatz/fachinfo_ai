@@ -1,4 +1,7 @@
+.DS_Store
 output/
 dbs/
 dbs
+get-pip.py
 log_bash
+punkt/

@@ -1,18 +1,13 @@
-multiple sclerosis
-renale Hypertonie
 Angina pectoris
-angina pectoris
-Lactosum monohydricum
-excipiens pro compresso obducto
-lait Maternel
-Lait Maternel
-lait maternel
-Solution injectable pour administration IV.
 L'effet pharmacodynamique
-Macrogol 6000
+Lactosum monohydricum
+Lait Maternel
 Macrogol 400
-Zaditen Ophtha SDU
+Macrogol 6000
+Retraits de lots
+Solution injectable pour administration IV.
 Zaditen Ophtha
+Zaditen Ophtha SDU
 Zavedos Lyophilisat
 Zavedos Solution
 Zeel comp.
@@ -29,4 +24,10 @@ Zolben C
 Zoledronat Axapharm Osteo
 Zoledronat Fresenius Onco
 Zoledronat Onco Labatec
+angina pectoris
+excipiens pro compresso obducto
+lait Maternel
+lait maternel
+multiple sclerosis
 patients pédiatriques
+renale Hypertonie

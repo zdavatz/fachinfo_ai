@@ -60,8 +60,12 @@ def remove_html_tags(text):
         soup = BeautifulSoup(text, "lxml")
 
         # Remove title and owner sections
-        soup.find("div", {"class": "MonTitle"}).decompose()
-        soup.find("div", {"class": "ownerCompany"}).decompose()
+        monTitle = soup.find("div", {"class": "MonTitle"})
+        if monTitle is not None:
+            monTitle.decompose()
+        ownerCompany = soup.find("div", {"class": "ownerCompany"})
+        if ownerCompany is not None:
+            ownerCompany.decompose()
         # Remove sections not to be included in the analysis, e.g. <div class="paragraph" id="section19">
         divs = ["section17",   # Zulassungsnummer
                 "section18",   # Packungen

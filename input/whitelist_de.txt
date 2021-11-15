@@ -131,6 +131,7 @@ Ringer-Lactat
 Ringer-Laktat
 Ringer-Lösung
 Ringeracetat
+SAPP
 Schläfrigkeit
 Schmerzen
 Schwangerschaft

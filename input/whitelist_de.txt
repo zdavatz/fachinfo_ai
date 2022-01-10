@@ -48,6 +48,8 @@ E297
 Edetat
 Elimination
 Fertilität
+G6PD
+G6PD-Mangel
 Glukose-Infusion
 Glukose-Injektionslösung
 Glukose-Lösung
@@ -83,7 +85,7 @@ Instabilität
 Insulin
 Jugendliche
 Jugendlichen
-jugendlicher
+Jugendlicher
 Kalium
 Kalzium
 Kinder
@@ -221,6 +223,7 @@ Zytiga
 Zyvoxid
 injizieren
 inkompatibel
+jugendliche
+jugendlichen
+jugendlicher
 metabilsulfit
-G6PD-Mangel
-G6PD

@@ -13,8 +13,7 @@ Doing NLTK and AI on Swiss Fachinfos with Python. Parsing all the important word
 * Auto-generated stopwords file in folder output (filename: auto_stopwords.csv)
 
 #### Requirements for Linux
-* pip install nltk
-* [python 3.5.2](https://www.python.org/ftp/python/3.5.2/Python-3.5.2.tgz)
+* pip install nltk, bs4, lxml
 * import nltk
 * nltk.download('stopwords','punkt')
 

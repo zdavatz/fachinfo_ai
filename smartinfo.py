@@ -181,6 +181,11 @@ def clean_up_string(lang, s):
 
         # Remove all strings with this format (+/-)60**
         s = re.sub(r"^[+-−.]?[0-9]+\*+$", "", s)
+        
+        # Handle special case with punctuation
+        # https://github.com/zdavatz/fachinfo_ai/issues/15
+        if s == "c.521T_>_C":
+            s = "c.521T>C"
         # Remove underscores _ from multi words tokenized text, e.g. Multiple_Sklerose
         s = s.replace("_", " ")
         # Remove all strings that are smaller than 3 chars

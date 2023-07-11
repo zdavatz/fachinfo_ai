@@ -121,6 +121,9 @@ def get_tokens(text):
         # Remove the punctuation using the character deletion step of translate
         tokens = nltk.word_tokenize(text)
         tokens = multi_word_tokenizer.tokenize(tokens)
+        # Handle special case with punctuation
+        # https://github.com/zdavatz/fachinfo_ai/issues/15
+        tokens = [ "c.521T>C" if w == "c.521T_>_C" else w for w in tokens]
         filtered = [w for w in tokens if (w not in list_of_stopwords and w.lower() not in list_of_stopwords)]
         filtered = [w for w in filtered if w not in string.punctuation]
         filtered = [item for item in filtered if not is_integer(item)]
@@ -181,11 +184,7 @@ def clean_up_string(lang, s):
 
         # Remove all strings with this format (+/-)60**
         s = re.sub(r"^[+-−.]?[0-9]+\*+$", "", s)
-        
-        # Handle special case with punctuation
-        # https://github.com/zdavatz/fachinfo_ai/issues/15
-        if s == "c.521T_>_C":
-            s = "c.521T>C"
+
         # Remove underscores _ from multi words tokenized text, e.g. Multiple_Sklerose
         s = s.replace("_", " ")
         # Remove all strings that are smaller than 3 chars
@@ -343,7 +342,7 @@ def main(argv):
             regnr = regnr.split(",")[0]
 
         n = len(rows)
-        if regnr:   # == "63175":
+        if regnr:
             if i % 31 == 0:
                 #print(regnr, end=' ', flush=True)
                 print("\r", round(100 * i / n, 1), " % ", end=' ', flush=True) # progress percentage

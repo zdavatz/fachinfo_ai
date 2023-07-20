@@ -132,7 +132,7 @@ def get_tokens(text):
     return []
 
 
-def clean_up_string(lang, s):
+def clean_up_string(lang, s, white_words=[]):
     """
     Cleans input string
     Note: the regexes are not ORed for clearity
@@ -164,9 +164,9 @@ def clean_up_string(lang, s):
         # Replace ' in numbers, e.g. 10'000 -> 10000
         s = re.sub(r"([+-]?[0-9]+)'([0-9]+)", r"\1\2", s)
         # Remove all numbers
-        s = re.sub(r"^[+-]?[0-9]+.[0-9]+?", "", s)
+        s = re.sub(r"^[+-]?[0-9]+\.[0-9]+?", "", s)
         # Remove all corpses from previous operation (exclude E-numbers, e.g. E218, G6PD, G6PD-Mangel, see issue #5)
-        if not s.startswith("E") and not s.startswith("G"):
+        if not s.startswith("E") and not s.startswith("G") and s not in white_words:
             s = re.sub(r"^[-|–]?(.)?[0-9]+", "", s)
         # Replace all alpha only strings which start with '-'
         s = re.sub(r"^[-–./*+,](\D+)$", r"\1", s)
@@ -188,7 +188,7 @@ def clean_up_string(lang, s):
         # Remove underscores _ from multi words tokenized text, e.g. Multiple_Sklerose
         s = s.replace("_", " ")
         # Remove all strings that are smaller than 3 chars
-        if len(s) <= 3:
+        if len(s) <= 3 and s not in white_words:
             s = ""
     return s    # s.encode('utf-8')
 
@@ -352,7 +352,7 @@ def main(argv):
                 if clean_text:
                     tokens = get_tokens(clean_text)
                     # Note to myself: list comprehensions are cool!
-                    tokens = [clean_up_string(lang, t) for t in tokens]
+                    tokens = [clean_up_string(lang, t, white_words) for t in tokens]
                     # Remove empty strings (note: filter retuns a filter object -> needs to be transformed to list)
                     tokens = list(filter(None, tokens))
                     # Get word count

@@ -93,3 +93,4 @@ intraveineuse
 nerveux
 tachycardie
 vasculaire
+Swissreg

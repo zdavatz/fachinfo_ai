@@ -35,6 +35,8 @@ mkdir dbs
 in the Python interactive shell do `import nltk` and then do `nltk.download('stopwords')` and `nltk.download('punkt')`
 then run `/usr/local/opt/python35/bin/python3.5 smartinfo.py --lang=fr`
 
+with Python 3.13.8 you also need to do: `nltk.download('punkt_tab')`
+
 
 #### sqlite Database to download under the GPLv3.0 License
 * http://pillbox.oddb.org/amiko_frequency.db

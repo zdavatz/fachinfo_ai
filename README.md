@@ -8,14 +8,14 @@ A 1:1 Rust port lives in `rust/` and produces byte-identical output
 cd rust && cargo build --release && cd ..
 ./rust/target/release/smartinfo --lang=de
 ```
-Benchmark (macOS, `/usr/bin/time -l`, 4564 de / 4634 fr Fachinfos, July 2026):
+Benchmark (macOS, 10 cores, `/usr/bin/time -l`, 4564 de / 4634 fr Fachinfos, July 2026):
 
-| Run | Python 3.14 + NLTK | Rust | Improvement |
+| Run | Python 3.14 + NLTK | Rust `--jobs 1` | Rust (all cores) |
 |---|---|---|---|
-| `--lang=de` wall time | 174.4 s | 40.0 s | 4.4× |
-| `--lang=de` peak memory | 1001 MB | 127 MB | 7.9× |
-| `--lang=fr` wall time | 187.5 s | 44.7 s | 4.2× |
-| `--lang=fr` peak memory | 1055 MB | 124 MB | 8.5× |
+| `--lang=de` wall time | 174.4 s | 39.4 s | 13.2 s |
+| `--lang=de` peak memory | 1001 MB | 176 MB | 195 MB |
+| `--lang=fr` wall time | 187.5 s | 43.3 s | 13.4 s |
+| `--lang=fr` peak memory | 1055 MB | 170 MB | 190 MB |
 #### Requirements:
 * List of stopwords in folder input (filename: stopwords.txt)
 * Amiko sqlite DB in folder dbs (filename: amiko_db_full_idx_de.db)

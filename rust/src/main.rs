@@ -11,8 +11,10 @@ mod mwe;
 mod punkt;
 mod treebank;
 
+use rayon::prelude::*;
 use rusqlite::Connection;
 use sha2::{Digest, Sha256};
+use std::collections::btree_map::Entry;
 use std::collections::{BTreeMap, HashMap, HashSet};
 use std::fs;
 use std::io::{BufWriter, Write};
@@ -75,6 +77,78 @@ fn find_chapters_with_tokens(
     word_to_chapter
 }
 
+/// Everything smartinfo.py's big loop does for one document: HTML cleanup,
+/// tokenization, clean_up_string, chapter mapping. Returns the document's
+/// unique keywords with their regnr(chapters) entry. Pure w.r.t. shared
+/// state, so documents can be processed in parallel.
+fn process_doc(
+    lang: &str,
+    regnr: &str,
+    html: &str,
+    p: &Pipeline,
+    white_words: &HashSet<String>,
+    mw_set: &HashSet<String>,
+) -> Vec<(String, String)> {
+    let doc = htmltext::extract(html);
+    if doc.full_text.is_empty() {
+        return Vec::new();
+    }
+    let tokens = get_tokens(&doc.full_text, p);
+    let cleaned: Vec<String> = tokens
+        .iter()
+        .map(|t| cleanup::clean_up_string(lang, t, white_words))
+        .filter(|s| !s.is_empty())
+        .collect();
+    let uniq: HashSet<String> = cleaned.into_iter().collect();
+
+    let w_to_c = find_chapters_with_tokens(&doc.sections, &uniq, mw_set, p);
+
+    uniq.into_iter()
+        .map(|w| {
+            let ch_ids = match w_to_c.get(&w) {
+                Some(c) => format!("({})", c),
+                None => String::new(),
+            };
+            let regnr_prime = format!("{}{}", regnr, ch_ids);
+            (w, regnr_prime)
+        })
+        .collect()
+}
+
+/// Process a batch of documents in parallel and merge the results into
+/// word_dict in document order (order matters: each keyword's regnr list
+/// must be appended in database row order to stay identical to the
+/// sequential/Python output).
+#[allow(clippy::too_many_arguments)]
+fn flush_batch(
+    batch: &mut Vec<(String, String)>,
+    word_dict: &mut BTreeMap<String, String>,
+    lang: &str,
+    p: &Pipeline,
+    white_words: &HashSet<String>,
+    mw_set: &HashSet<String>,
+) {
+    let results: Vec<Vec<(String, String)>> = batch
+        .par_iter()
+        .map(|(regnr, html)| process_doc(lang, regnr, html, p, white_words, mw_set))
+        .collect();
+    for doc_words in results {
+        for (w, regnr_prime) in doc_words {
+            match word_dict.entry(w) {
+                Entry::Occupied(mut e) => {
+                    let v = e.get_mut();
+                    v.push('|');
+                    v.push_str(&regnr_prime);
+                }
+                Entry::Vacant(e) => {
+                    e.insert(regnr_prime);
+                }
+            }
+        }
+    }
+    batch.clear();
+}
+
 fn punkt_tab_dir() -> PathBuf {
     if let Ok(d) = std::env::var("NLTK_DATA") {
         return PathBuf::from(d).join("tokenizers/punkt_tab/english");
@@ -92,8 +166,10 @@ fn read_lines(path: &str, trim: fn(&str) -> &str) -> Vec<String> {
 }
 
 fn main() {
-    // Language flag (getopt-style: --lang=de, --lang de, -l de, -h)
+    // Language flag (getopt-style: --lang=de, --lang de, -l de, -h),
+    // plus --jobs/-j N to cap the rayon worker count (default: all cores)
     let mut lang = "de".to_string();
+    let mut jobs: Option<usize> = None;
     let args: Vec<String> = std::env::args().skip(1).collect();
 
     // Hidden debug modes for stage-by-stage parity validation against Python
@@ -130,8 +206,19 @@ fn main() {
                 println!("smartinfo --lang <language>");
                 std::process::exit(2);
             });
+        } else if let Some(v) = a.strip_prefix("--jobs=") {
+            jobs = v.parse().ok();
+        } else if a == "--jobs" || a == "-j" {
+            i += 1;
+            jobs = args.get(i).and_then(|v| v.parse().ok());
         }
         i += 1;
+    }
+    if let Some(j) = jobs {
+        rayon::ThreadPoolBuilder::new()
+            .num_threads(j)
+            .build_global()
+            .ok();
     }
     let lang = lang.as_str();
     if lang != "de" && lang != "fr" {
@@ -193,6 +280,12 @@ fn main() {
     let start = Instant::now();
     let mut word_dict: BTreeMap<String, String> = BTreeMap::new();
 
+    // Rows are streamed from sqlite and processed in parallel batches:
+    // rayon fans a batch out across all cores, then the results are merged
+    // into word_dict in row order so the output stays byte-identical.
+    const BATCH_SIZE: usize = 256;
+    let mut batch: Vec<(String, String)> = Vec::with_capacity(BATCH_SIZE);
+
     let mut stmt = con.prepare("SELECT regnrs, content FROM amikodb").unwrap();
     let mut db_rows = stmt.query([]).unwrap();
     let mut i: usize = 0;
@@ -212,36 +305,27 @@ fn main() {
             print!("\r {} % ", (1000.0 * i_cur as f64 / n as f64).round() / 10.0);
             std::io::stdout().flush().ok();
         }
-        let Some(html) = &content else { continue };
-        let doc = htmltext::extract(html);
-        if doc.full_text.is_empty() {
-            continue;
-        }
-        let tokens = get_tokens(&doc.full_text, &pipeline);
-        let cleaned: Vec<String> = tokens
-            .iter()
-            .map(|t| cleanup::clean_up_string(lang, t, &white_words))
-            .filter(|s| !s.is_empty())
-            .collect();
-        let uniq: HashSet<String> = cleaned.into_iter().collect();
-
-        let w_to_c = find_chapters_with_tokens(&doc.sections, &uniq, &mw_set, &pipeline);
-
-        for w in &uniq {
-            let ch_ids = match w_to_c.get(w) {
-                Some(c) => format!("({})", c),
-                None => String::new(),
-            };
-            let regnr_prime = format!("{}{}", regnr, ch_ids);
-            word_dict
-                .entry(w.clone())
-                .and_modify(|e| {
-                    e.push('|');
-                    e.push_str(&regnr_prime);
-                })
-                .or_insert(regnr_prime);
+        let Some(html) = content else { continue };
+        batch.push((regnr.to_string(), html));
+        if batch.len() >= BATCH_SIZE {
+            flush_batch(
+                &mut batch,
+                &mut word_dict,
+                lang,
+                &pipeline,
+                &white_words,
+                &mw_set,
+            );
         }
     }
+    flush_batch(
+        &mut batch,
+        &mut word_dict,
+        lang,
+        &pipeline,
+        &white_words,
+        &mw_set,
+    );
 
     println!("\n============================================================\n");
     let mut cnt: u64 = 0;

@@ -2,7 +2,8 @@
 
 A 1:1 port of `../smartinfo.py` producing **byte-identical output** (same
 `frequency_<lang>.csv`, `auto_stopwords_<lang>.csv` and
-`amiko_frequency_<lang>.db`), roughly 4× faster with ~8× less memory.
+`amiko_frequency_<lang>.db`), roughly 13× faster (4× single-threaded) with
+~5× less memory.
 
 It re-implements the exact NLTK tokenization chain used by the Python
 version: the Punkt sentence tokenizer (tokenization-time algorithm, using the
@@ -26,6 +27,9 @@ From the repository root (same data layout as the Python version:
 ./rust/target/release/smartinfo --lang=fr
 ```
 
+Documents are processed on all cores by default; `--jobs N` (or `-j N`)
+caps the worker count.
+
 Requires the NLTK `punkt_tab` English tables (also needed by the Python
 version), found via `$NLTK_DATA` or `~/nltk_data`
 (`tokenizers/punkt_tab/english/`). Install them once with:
@@ -42,5 +46,6 @@ import nltk; nltk.download('punkt_tab')
   are dropped instead of being un-prefixed), and the auto-stopword threshold
   counting chapter ids as well as documents via `len(r.split(","))`.
 - Unlike the Python version (which `fetchall()`s the whole table), rows are
-  streamed from sqlite one at a time; this cuts peak memory from ~550 MB to
-  ~125 MB with no effect on speed or output.
+  streamed from sqlite in batches of 256 documents; each batch is processed
+  in parallel with rayon and merged into the keyword index in row order, so
+  the output stays byte-identical regardless of the worker count.

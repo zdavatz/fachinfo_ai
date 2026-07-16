@@ -1,5 +1,21 @@
 # fachinfo_ai
 Doing NLTK and AI on Swiss Fachinfos with Python. Parsing all the important words from all FIs in Switzerland.
+
+#### Rust version
+A 1:1 Rust port lives in `rust/` and produces byte-identical output
+(same CSVs, same rows in `amiko_frequency_<lang>.db`). See `rust/README.md`.
+```
+cd rust && cargo build --release && cd ..
+./rust/target/release/smartinfo --lang=de
+```
+Benchmark (macOS, `/usr/bin/time -l`, 4564 de / 4634 fr Fachinfos, July 2026):
+
+| Run | Python 3.14 + NLTK | Rust | Speedup |
+|---|---|---|---|
+| `--lang=de` wall time | 174.4 s | 40.0 s | 4.4× |
+| `--lang=de` peak memory | 1001 MB | 546 MB | 1.8× |
+| `--lang=fr` wall time | 187.5 s | 44.0 s | 4.3× |
+| `--lang=fr` peak memory | 1055 MB | 576 MB | 1.8× |
 #### Requirements:
 * List of stopwords in folder input (filename: stopwords.txt)
 * Amiko sqlite DB in folder dbs (filename: amiko_db_full_idx_de.db)

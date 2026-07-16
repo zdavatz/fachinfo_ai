@@ -5,3 +5,8 @@ dbs
 get-pip.py
 log_bash
 punkt/
+.venv/
+rust/target/
+output_py/
+output_rs/
+__pycache__/

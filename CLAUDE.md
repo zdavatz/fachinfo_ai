@@ -20,7 +20,7 @@ There are no tests and no linter.
 
 A Rust port lives in `rust/` (`cargo build --release`, then run
 `./rust/target/release/smartinfo --lang=de` from the repo root). It produces
-byte-identical output to the Python script (~4× faster, ~half the memory) and
+byte-identical output to the Python script (~4× faster, ~8× less memory) and
 must be kept in sync when the pipeline changes; see `rust/README.md`.
 
 ## Pipeline architecture

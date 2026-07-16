@@ -10,12 +10,12 @@ cd rust && cargo build --release && cd ..
 ```
 Benchmark (macOS, `/usr/bin/time -l`, 4564 de / 4634 fr Fachinfos, July 2026):
 
-| Run | Python 3.14 + NLTK | Rust | Speedup |
+| Run | Python 3.14 + NLTK | Rust | Improvement |
 |---|---|---|---|
 | `--lang=de` wall time | 174.4 s | 40.0 s | 4.4× |
-| `--lang=de` peak memory | 1001 MB | 546 MB | 1.8× |
-| `--lang=fr` wall time | 187.5 s | 44.0 s | 4.3× |
-| `--lang=fr` peak memory | 1055 MB | 576 MB | 1.8× |
+| `--lang=de` peak memory | 1001 MB | 127 MB | 7.9× |
+| `--lang=fr` wall time | 187.5 s | 44.7 s | 4.2× |
+| `--lang=fr` peak memory | 1055 MB | 124 MB | 8.5× |
 #### Requirements:
 * List of stopwords in folder input (filename: stopwords.txt)
 * Amiko sqlite DB in folder dbs (filename: amiko_db_full_idx_de.db)

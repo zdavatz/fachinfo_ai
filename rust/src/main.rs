@@ -143,21 +143,15 @@ fn main() {
         fs::create_dir_all("./output").expect("cannot create ./output");
     }
 
-    // Open connection to database for reading (all rows up front, mirroring
-    // the Python version's fetchall; only the two used columns are kept)
+    // Open connection to database for reading. Rows are streamed one at a
+    // time (unlike the Python version's fetchall) — only the current row's
+    // regnrs/content are held in memory.
     let db_path = format!("./dbs/amiko_db_full_idx_{}.db", lang);
-    let rows: Vec<(Option<String>, Option<String>)> = {
-        let con =
-            Connection::open_with_flags(&db_path, rusqlite::OpenFlags::SQLITE_OPEN_READ_ONLY)
-                .unwrap_or_else(|e| panic!("cannot open {}: {}", db_path, e));
-        let mut stmt = con.prepare("SELECT regnrs, content FROM amikodb").unwrap();
-        let rows = stmt
-            .query_map([], |r| Ok((r.get(0)?, r.get(1)?)))
-            .unwrap()
-            .collect::<Result<Vec<_>, _>>()
-            .unwrap();
-        rows
-    };
+    let con = Connection::open_with_flags(&db_path, rusqlite::OpenFlags::SQLITE_OPEN_READ_ONLY)
+        .unwrap_or_else(|e| panic!("cannot open {}: {}", db_path, e));
+    let n: usize = con
+        .query_row("SELECT COUNT(*) FROM amikodb", [], |r| r.get(0))
+        .unwrap();
 
     // Input word lists (BOM and empty lines preserved, like the Python version)
     let stop_words = read_lines(&format!("./input/stopwords_{}.txt", lang), str::trim);
@@ -198,21 +192,27 @@ fn main() {
     // Start big loop
     let start = Instant::now();
     let mut word_dict: BTreeMap<String, String> = BTreeMap::new();
-    let n = rows.len();
 
-    for (i, (regnrs, content)) in rows.iter().enumerate() {
-        let regnr = match regnrs {
+    let mut stmt = con.prepare("SELECT regnrs, content FROM amikodb").unwrap();
+    let mut db_rows = stmt.query([]).unwrap();
+    let mut i: usize = 0;
+    while let Some(row) = db_rows.next().unwrap() {
+        let i_cur = i;
+        i += 1;
+        let regnrs: Option<String> = row.get(0).unwrap();
+        let content: Option<String> = row.get(1).unwrap();
+        let regnr = match &regnrs {
             Some(r) if !r.is_empty() => r.split(',').next().unwrap_or(""),
             _ => "",
         };
         if regnr.is_empty() {
             continue;
         }
-        if i % 31 == 0 {
-            print!("\r {} % ", (1000.0 * i as f64 / n as f64).round() / 10.0);
+        if i_cur % 31 == 0 {
+            print!("\r {} % ", (1000.0 * i_cur as f64 / n as f64).round() / 10.0);
             std::io::stdout().flush().ok();
         }
-        let Some(html) = content else { continue };
+        let Some(html) = &content else { continue };
         let doc = htmltext::extract(html);
         if doc.full_text.is_empty() {
             continue;
